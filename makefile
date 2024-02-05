@@ -72,6 +72,7 @@ check-service-resolver:
 
 ## EXTRAS
 # Install argo rollouts kube extension
-install-required-extensions:
+install-required:
 	brew install argoproj/tap/kubectl-argo-rollouts; \
-	brew install yq
+    brew install helm; \
+    brew install kind; \
