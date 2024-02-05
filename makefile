@@ -4,7 +4,9 @@ PLUGIN_DIR=~/dev/rollouts-plugin-trafficrouter-consul
 
 ### SETUP KIND CLUSTER WITH CONSUL
 # setup sets up the kind cluster and deploys the consul helm chart
-setup: kind deploy
+consul-setup: kind deploy
+	./scripts/verify-pod-ready.sh consul-server 300; \
+	./scripts/verify-pod-ready.sh consul-connect-injector 300; \
 
 kind: kind-delete
 	kind create cluster --image kindest/node:$(KUBERNETES_VERSION) --name=dc1 --config ./resources/kind_config.yaml
@@ -21,7 +23,7 @@ deploy:
 	helm install consul hashicorp/consul --version $(CONSUL_K8S_CHART_VERSION) -f values.yaml
 
 #### INSTALL ARGO
-argo: deploy-argo apply-crds
+argo-setup: deploy-argo apply-crds
 
 deploy-argo:
 	kubectl create namespace argo-rollouts; \
@@ -40,9 +42,11 @@ apply-crds:
 	-f resources/canary-rollout.yaml
 
 ### Test Verification
+setup: consul-setup argo-setup
+
 # Command for checking how the service is being split by running curl from inside a client pod
 splitting-watch:
-	./scripts/test.sh
+	./scripts/splitting-watch.sh
 
 rollout-watch:
 	kubectl argo rollouts get rollout static-server --watch
