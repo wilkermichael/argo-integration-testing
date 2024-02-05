@@ -1,8 +1,5 @@
 KUBERNETES_VERSION = v1.25.11
-CHART_VERSION = 1.3.1
-ARGO_REPO=~/dev/argo-rollouts-michael
-ARGO_MANIFEST=~/dev/argo-rollouts-michael/manifests/install.yaml
-ARGO_DOCKER=wilko1989/argo-rollouts:latest
+CONSUL_K8S_CHART_VERSION = 1.3.1
 PLUGIN_DIR=~/dev/rollouts-plugin-trafficrouter-consul
 
 ### SETUP KIND CLUSTER WITH CONSUL
@@ -21,7 +18,7 @@ kind-delete:
 
 # deploy deploys the consul helm chart with the values.yaml file
 deploy:
-	helm install consul hashicorp/consul --version $(CHART_VERSION) -f values.yaml
+	helm install consul hashicorp/consul --version $(CONSUL_K8S_CHART_VERSION) -f values.yaml
 
 #### INSTALL ARGO
 argo: deploy-argo apply-crds
@@ -44,7 +41,7 @@ apply-crds:
 
 ### Test Verification
 # Command for checking how the service is being split by running curl from inside a client pod
-check-splitting:
+splitting-watch:
 	./scripts/test.sh
 
 rollout-watch:
@@ -63,6 +60,15 @@ undo:
 
 abort:
 	kubectl argo rollouts abort static-server
+
+retry:
+	kubectl argo rollouts retry rollout static-server
+
+check-service-splitter:
+	kubectl describe servicesplitters.consul.hashicorp.com
+
+check-service-resolver:
+	kubectl describe serviceresolver.consul.hashicorp.com
 
 ## EXTRAS
 # Install argo rollouts kube extension
