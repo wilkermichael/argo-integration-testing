@@ -15970,7 +15970,7 @@ spec:
              path: /rollouts-plugin-trafficrouter-consul
              type: DirectoryOrCreate
       containers:
-        - image: wilko1989/argo-rollouts@sha256:3cc8ddd3c2623b74999c506e8436220c9414246e6a52a5c9494e96c24d5b04d2
+        - image: wilko1989/argo-rollouts@sha256:ee39cdc2b7921410508248cac940c446ee9a60a64b3f8900e019dda3389d46d7
           imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 3
