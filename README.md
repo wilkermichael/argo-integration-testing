@@ -12,11 +12,11 @@ This is for building and testing argo rollout integrations with Consul. For simp
 # Verify v1 to v2 rollout
 1. Run `make setup` to setup the system with the static-server/client, consul and argo. 
    - Everything is installed to the `default` namespace except for Argo gets installed in the `argo` namespace.
-2. Run `make check-service-splitter` and `make check-service-resolver`
-   - service-splitter shows 100% of traffic directed to stable
-   - service-resolver only has a stable filter (`Service.Meta.version=1`)
-3. Run `make rollout-watch` to watch the deployments
-4. Run `make splitting-watch` to witness the traffic splitting between deployments
+2. Run `make check-service-splitter` and `make check-service-resolver`, we will run these scripts periodically throughout the testing scenarios
+   - service-splitter: shows 100% of traffic directed to stable
+   - service-resolver: only has a stable filter (`Service.Meta.version=1`)
+3. Open a new window and run `make rollout-watch` to watch the deployments. This will run continuously throughout the test.
+4. Open a new window and run `make splitting-watch` to witness the traffic splitting between deployments. This will run continuously throughout the test.
    - You should see 100% of traffic directed to v1
 5. Run `make deploy-canary-v2` to deploy a canary rollout. 
    - splitting-watch: You should see traffic begin directing to V2 but most of the traffic is still directed to V1
