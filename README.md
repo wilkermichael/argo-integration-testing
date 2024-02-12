@@ -1,4 +1,4 @@
-MOVED TO AND MAINTAINED IN: https://github.com/argoproj-labs/rollouts-plugin-trafficrouter-consul
+MOVED TO AND MAINTAINED IN: [rollouts-plugin-trafficrouter-consul](https://github.com/argoproj-labs/rollouts-plugin-trafficrouter-consul/tree/main/testing)
 
 # Usage
 This is for building and testing argo rollout integrations with Consul. For simplicity, everything uses the `make` command.
