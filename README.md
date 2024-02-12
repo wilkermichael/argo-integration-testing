@@ -1,3 +1,5 @@
+MOVED TO AND MAINTAINED IN: https://github.com/argoproj-labs/rollouts-plugin-trafficrouter-consul
+
 # Usage
 This is for building and testing argo rollout integrations with Consul. For simplicity, everything uses the `make` command.
 
